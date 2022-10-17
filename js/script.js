@@ -7,6 +7,9 @@ function play(){
     let numCell;
     const bombGame = document.getElementById('bomb-game');
     bombGame.innerHTML = '';
+    // numero di bombe default a 16
+    const NUM_BOMB = 16;
+    const bombsPosition = [];
 
     const levelHtml = document.getElementById('livello');
     const level = levelHtml.value;
@@ -23,6 +26,15 @@ function play(){
             numCell = 49;
             break;
     }
+    // si posizionano le bombe in modo random
+    while(bombsPosition.length < NUM_BOMB){
+        const bomb = randomNumber(1,numCell);
+        if(!bombsPosition.includes(bomb)){
+            bombsPosition.push(bomb);
+        }
+    }
+    console.log(bombsPosition);
+    
     // funzione che genera la cella
     function  drawCell(num) {
         const cellPersie = Math.sqrt(numCell);
@@ -34,10 +46,18 @@ function play(){
         cell.innerHTML = `
             <span>${num}</span>
         `;
-        // funzione che colora di azzurro la cella
-        cell.addEventListener('click',function(){
-            this.classList.add('blue');
-        })
+
+    // evento di cambio colore della cella
+        cell.addEventListener('click', function(){
+            if(bombsPosition.includes(num)){
+                this.classList.add('red');
+                alert('Hai perso riprova!');
+                window.location.reload();
+            }
+            else{
+                this.classList.add('blue');
+            }
+        });
         return cell;
     }
     // funzione che genera griglia di gioco
@@ -53,3 +73,13 @@ function play(){
     drawGrid();
 };
 playButton.addEventListener('click', play);
+
+// funzione per nascondere selezione livello
+function myFunction(){
+    var x = document.getElementById("myDIV");
+    if (x.style.display === "none") {
+        window.location.reload();
+    } else {
+      x.style.display = "none";
+    }
+};

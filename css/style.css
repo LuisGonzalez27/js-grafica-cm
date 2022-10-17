@@ -34,6 +34,9 @@ main{
 .blue{
     background-color: var(--blue-pantone);
 }
+.red{
+    background-color: red;
+}
 footer{
     width: 50%;
     position: fixed;
